@@ -19,7 +19,7 @@
                     <h3 class="text-center mb-3 font-bold">{{ sitio.nombre }}</h3>
 
                     <div class="flex justify-between space-x-2 mt-3">
-                        <label for="topografia_{{ sitio.id }}" class="text-sm">Replanteo Topográfico</label>
+                        <label for="topografia_{{ sitio.id }}" class="text-sm">Topografia</label>
                         <input type="range" id="topografia_{{ sitio.id }}" disabled min="0" max="100" value="{{ sitio.topografia }}" class="range range-info range-xs w-1/3 lg:w-1/2"/>
                     </div>
                     <div class="flex justify-between space-x-2">
@@ -48,7 +48,7 @@
                     </div>
                     <div class="flex justify-between space-x-2 my-3">
                         <label for="avance_{{ sitio.id }}" class="text-sm font-medium">{{ sitio.avance_total }}%</label>
-                        <input type="range" id="avance_{{ sitio.id }}" disabled min="0" max="100" value="{{ sitio.avance_total }}" class="range range-success range-xs w-1/3 lg:w-1/2 w-full"/>
+                        <input type="range" id="avance_{{ sitio.id }}" disabled min="0" max="100" value="{{ sitio.avance_total }}" class="range range-success range-xs w-1/3 lg:w-1/2"/>
                         <a href="{% url 'galeria:edit_sitio' slug=sitio.slug %}" class="btn btn-xs btn-primary text-white">Actualizar</a>
                     </div>
                     <p>Último reporte: {{ sitio.ultima_imagen.fecha_carga|date:"d/m/Y" }}</p>
