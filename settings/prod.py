@@ -8,7 +8,7 @@ DEBUG = False
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 
-ALLOWED_HOSTS = [ "*" ]
+ALLOWED_HOSTS = [ "sx.redlinegs.com" ]
 
 INSTALLED_APPS += [
 
@@ -32,6 +32,7 @@ DATABASES = {
     }
 }
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+CSRF_TRUSTED_ORIGINS = ['https://sx.redlinegs.com']
