@@ -7,4 +7,4 @@ echo 'Running migrations...'
 python manage.py migrate --settings=config.settings.prod
 
 echo 'Runing Server...'
-gunicorn config.wsgi:application DJANGO_SETTINGS_MODULE=settings.prod --bind 0.0.0.0:8000
+gunicorn settings.wsgi:application DJANGO_SETTINGS_MODULE=settings.prod --bind 0.0.0.0:8000
