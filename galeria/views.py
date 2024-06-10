@@ -26,13 +26,13 @@ class GaleriaListView(LoginRequiredMixin, ListView):
             # Si el usuario es superusuario, obtiene todos los sitios
             queryset = super().get_queryset().annotate(
                 ultima_fecha_imagen=Max('imagenes__fecha_carga'),
-                avance_total=Cast(F('topografia')* 0.05 + F('terreno') * 0.15 + F('muro') * 0.4 + F('grava_geomembrana') * 0.15 + F('porton_acceso') * 0.10 + F('spat') * 0.05 + F('electrico') * 0.15, IntegerField())
+                avance_total=Cast(F('topografia')* 0.05 + F('terreno') * 0.15 + F('muro') * 0.4 + F('grava_geomembrana') * 0.15 + F('porton_acceso') * 0.10 + F('spat') * 0.05 + F('electrico') * 0.1, IntegerField())
                 ).prefetch_related('imagenes')
         else:
             # Si no es superusuario, obtiene solo los sitios asociados al perfil del usuario
             queryset = user.userprofile.sitios.annotate(
                 ultima_fecha_imagen=Max('imagenes__fecha_carga'),
-                avance_total=Cast(F('topografia')* 0.05 + F('terreno') * 0.15 + F('muro') * 0.4 + F('grava_geomembrana') * 0.15 + F('porton_acceso') * 0.10 + F('spat') * 0.05 + F('electrico') * 0.15, IntegerField())
+                avance_total=Cast(F('topografia')* 0.05 + F('terreno') * 0.15 + F('muro') * 0.4 + F('grava_geomembrana') * 0.15 + F('porton_acceso') * 0.10 + F('spat') * 0.05 + F('electrico') * 0.1, IntegerField())
                 ).prefetch_related('imagenes')
         
         for galeria in queryset:
