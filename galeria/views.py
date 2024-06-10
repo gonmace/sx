@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.db.models import Max
+from django.db.models import Max, F, IntegerField
 from django.views.generic import ListView
 from .models import Comentario, Imagen, Sitio
 from django.db.models.functions import Trunc
@@ -8,9 +8,10 @@ from collections import OrderedDict
 from django.db.models import DateField
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import ImagesForm
+from .forms import ImagesForm, SitioForm
 from django.db.models import Max
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models.functions import Cast
 
 class GaleriaListView(LoginRequiredMixin, ListView):
     model = Sitio
@@ -23,10 +24,16 @@ class GaleriaListView(LoginRequiredMixin, ListView):
 
         if user.is_superuser:
             # Si el usuario es superusuario, obtiene todos los sitios
-            queryset = super().get_queryset().annotate(ultima_fecha_imagen=Max('imagenes__fecha_carga')).prefetch_related('imagenes')
+            queryset = super().get_queryset().annotate(
+                ultima_fecha_imagen=Max('imagenes__fecha_carga'),
+                avance_total=Cast(F('topografia')* 0.05 + F('terreno') * 0.15 + F('muro') * 0.4 + F('grava_geomembrana') * 0.15 + F('porton_acceso') * 0.10 + F('spat') * 0.05 + F('electrico') * 0.15, IntegerField())
+                ).prefetch_related('imagenes')
         else:
             # Si no es superusuario, obtiene solo los sitios asociados al perfil del usuario
-            queryset = user.userprofile.sitios.annotate(ultima_fecha_imagen=Max('imagenes__fecha_carga')).prefetch_related('imagenes')
+            queryset = user.userprofile.sitios.annotate(
+                ultima_fecha_imagen=Max('imagenes__fecha_carga'),
+                avance_total=Cast(F('topografia')* 0.05 + F('terreno') * 0.15 + F('muro') * 0.4 + F('grava_geomembrana') * 0.15 + F('porton_acceso') * 0.10 + F('spat') * 0.05 + F('electrico') * 0.15, IntegerField())
+                ).prefetch_related('imagenes')
         
         for galeria in queryset:
             ultima_imagen = galeria.imagenes.filter(fecha_carga=galeria.ultima_fecha_imagen).first()
@@ -90,3 +97,19 @@ def fileupload(request):
     
     context = {'form': form}
     return render(request, "cargar.html", context)
+
+@login_required(login_url='login/')
+def update_sitio(request, slug):
+    sitio = get_object_or_404(Sitio, slug=slug)
+    if request.method == 'POST':
+        form = SitioForm(request.POST, instance=sitio)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Sitio actualizado con éxito.")
+            return redirect('galeria:galeria_list')
+        else:
+            messages.error(request, "Por favor corrija los errores en el formulario.")
+    else:
+        form = SitioForm(instance=sitio)
+
+    return render(request, 'avance_form.html', {'form': form})

@@ -14,7 +14,7 @@
       <p class="text-md text-base-100">Carga de multiples imagenes.</p>
     </div>
 
-    <form method="post" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-lg shadow-lg">
+    <form method="post" enctype="multipart/form-data" class="space-y-4 max-w-xl mx-auto bg-white p-6 rounded-lg shadow-lg">
         {% csrf_token %}
         {% for field in form %}
             <div class="mb-4">
@@ -30,7 +30,6 @@
         {% endfor %}    
             <!-- Campo de entrada para archivos personalizado -->
     <div class="mb-4">
-        {% comment %} <label for="images" multiple class="block text-sm font-medium text-gray-700">Seleccionar Imágenes</label> {% endcomment %}
         <input type="file" id="images" name="images" multiple class="form-control file-input file-input-bordered file-input-info mt-1 block w-full max-w-xs rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
     </div>        
             {% comment %} <input type="file" name="images" multiple class="form-control file-input file-input-bordered file-input-info   w-full max-w-xs" /> {% endcomment %}

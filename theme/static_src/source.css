@@ -17,10 +17,12 @@
 
   p {
     @apply text-base text-gray-700; /* Ejemplo de estilos para texto párrafo */
-  }
+  
+}}
+
+.rangos {
+    @apply range-xs max-w-48;
 }
-
-
 
 .active {
     @apply text-green-300;

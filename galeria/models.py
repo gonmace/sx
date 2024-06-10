@@ -12,7 +12,17 @@ class Sitio(models.Model):
     lat = models.FloatField("Latitud", max_length=11, blank=True, null=True)
     lon = models.FloatField("Longitud", max_length=11, blank=True, null=True)
     slug = models.SlugField(max_length=10, blank=True, null=True)
-
+      
+    topografia = models.IntegerField("Replanteo", default=0)  
+    terreno = models.IntegerField("Nivelación y Preparación Terreno", default=0)
+    muro = models.IntegerField("Muro Perimetral", default=0)
+    grava_geomembrana = models.IntegerField("Grava y Geomembrana", default=0)
+    porton_acceso = models.IntegerField("Portón y Acceso", default=0)
+    spat = models.IntegerField("Sistema Puesto a Tierra", default=0)
+    electrico = models.IntegerField("Sistema Electrico", default=0)
+    
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='sitios_subidos', blank=True, null=True)   
+    
     def save(self, *args, **kwargs):
         self.slug = slugify(self.sitio)[:10]
         super().save(*args, **kwargs)

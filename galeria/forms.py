@@ -10,6 +10,7 @@ class ImagesForm(forms.ModelForm):
         model = Imagen
         fields = ['sitio', 'fecha_carga', 'comentario']
 
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super(ImagesForm, self).__init__(*args, **kwargs)
@@ -18,7 +19,7 @@ class ImagesForm(forms.ModelForm):
             'type': 'text',
         })
         self.fields['fecha_carga'].initial = timezone.now().date()
-        
+        self.fields['fecha_carga'].disabled = True
 
         if user is not None:
             user_profile = UserProfile.objects.get(user=user)
@@ -29,3 +30,17 @@ class ImagesForm(forms.ModelForm):
             if sitios.count() == 1:
                 self.fields['sitio'].initial = sitios.first().id
                 self.fields['sitio'].disabled = True 
+                
+
+class SitioForm(forms.ModelForm):
+    class Meta:
+        model = Sitio
+        fields = ['topografia', 'terreno', 'muro', 'grava_geomembrana', 'porton_acceso', 'spat', 'electrico']
+        percentage = forms.IntegerField(widget=forms.NumberInput(attrs={
+            'type': 'range',
+            'min': '0',
+            'max': '100',
+            'value': '40',
+            'class': 'range range-primary',
+            'oninput': "this.nextElementSibling.value = this.value"
+        }))

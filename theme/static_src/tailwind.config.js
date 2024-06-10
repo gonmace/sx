@@ -26,6 +26,13 @@ module.exports = {
               "accent": "#fa0000",
               "neutral": "#3d4451",
               "base-100": "#fffff8",
+
+              "terreno": "#fff5f5",
+              "muro": "#fed7d7",
+              "grava": "#feb2b2",
+              "porton": "#fc8181",
+              "pat": "#f56565",
+              "electrico": "#e53e3e",
             },
           },
           "dark",
