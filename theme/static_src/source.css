@@ -21,7 +21,7 @@
 }}
 
 .rangos {
-    @apply range-xs max-w-48;
+    @apply range-xs max-w-64;
 }
 
 .active {
