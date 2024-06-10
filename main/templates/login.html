@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                Inicia sesión
+            </h2>
+        </div>
+        <form class="mt-8 space-y-6" action="#" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+            <div class="rounded-md shadow-sm -space-y-px">
+                <div>
+                    <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium text-gray-700">Usuario</label>
+                    <input id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" type="text" autocomplete="username" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition duration-200 ease-in-out" placeholder="Tu usuario">
+                </div>
+                <div>
+                    <label for="{{ form.password.id_for_label }}" class="block text-sm font-medium text-gray-700">Contraseña</label>
+                    <input id="{{ form.password.id_for_label }}" name="{{ form.password.name }}" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition duration-200 ease-in-out" placeholder="Tu contraseña">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary w-full text-white">
+                    Iniciar sesión
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{% endblock css %}
+
+{% block body_class %}bg-secondary{% endblock %}
+{% block content %} 
+  <div class="w-full max-w-7xl mx-auto px-4 py-6">
+    <!-- Título del formulario -->
+    <div class="text-center mb-8">
+      <h1 class="text-2xl font-bold text-primary">REPORTES</h1>
+      <p class="text-md text-base-100">Carga de multiples imagenes.</p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-lg shadow-lg">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="mb-4">
+                <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+                {{ field|add_class:"mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" }}
+                {% if field.help_text %}
+                    <p class="mt-2 text-sm text-gray-500">{{ field.help_text }}</p>
+                {% endif %}
+                {% for error in field.errors %}
+                    <p class="text-sm text-red-600">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}    
+            <!-- Campo de entrada para archivos personalizado -->
+    <div class="mb-4">
+        {% comment %} <label for="images" multiple class="block text-sm font-medium text-gray-700">Seleccionar Imágenes</label> {% endcomment %}
+        <input type="file" id="images" name="images" multiple class="form-control file-input file-input-bordered file-input-info mt-1 block w-full max-w-xs rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+    </div>        
+            {% comment %} <input type="file" name="images" multiple class="form-control file-input file-input-bordered file-input-info   w-full max-w-xs" /> {% endcomment %}
+            <div>
+                <button type="submit" class="btn btn-primary text-white w-full mt-6">
+                CARGAR REPORTE / IMAGENES
+            </div>
+        </button>
+    </form>
+  </div>
+
+{% endblock content %} 
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr('#id_fecha_carga', {
+                dateFormat: "d/m/Y",
+            });
+        });
+    </script>
+{% endblock js %}
+
